@@ -43,14 +43,14 @@ int main() {
 	return 0;
 }
 
-void resetBoard() {		//º¸µå
+void resetBoard() {		//ë³´ë“œ
 	for (int i = 0; i < 3;i++) {
 		for (int j = 0; j < 3; j++) {
 			board[i][j] = ' ';
 		}
 	}
 }
-void printBoard() {			// ÆÇ Á¦ÀÛ
+void printBoard() {			// íŒ ì œìž‘
 	printf("| %c | %c | %c |", board[0][0], board[0][1], board[0][2]);
 	printf("\n|---|---|---|\n");
 	printf("| %c | %c | %c |", board[1][0], board[1][1], board[1][2]);
@@ -59,7 +59,7 @@ void printBoard() {			// ÆÇ Á¦ÀÛ
 	printf("\n|---|---|---|\n");
 	printf("\n");
 }
-int checkFreeSpaces() {		//ºó °ø°£
+int checkFreeSpaces() {		//ë¹ˆ ê³µê°„
 	int freeSpaces = 9;
 	for (int i = 0; i < 3;i++) {
 		for (int j = 0; j < 3; j++) {
@@ -70,28 +70,33 @@ int checkFreeSpaces() {		//ºó °ø°£
 	}
 	return freeSpaces;
 }
-void playerMove() {			//ÇÃ·¹ÀÌ¾î µÎ±â
+void playerMove() {
 	int x;
 	int y;
-	do
-	{
-		printf("°¡·Î ÀÔ·ÂÇÏ¼¼¿ä(1-3) : ");
-		scanf("%d", &x);
+	char input[10]; // ë¬¸ìžì—´ì„ ì €ìž¥í•  ë°°ì—´
+
+	do {
+		printf("ê°€ë¡œ ìž…ë ¥í•˜ì„¸ìš”(1-3) : ");
+		fgets(input, sizeof(input), stdin); // fgets()ë¥¼ ì‚¬ìš©í•˜ì—¬ ë¬¸ìžì—´ ìž…ë ¥ë°›ìŒ
+		x = atoi(input); // ë¬¸ìžì—´ì„ ì •ìˆ˜ë¡œ ë³€í™˜
+
+		printf("ì„¸ë¡œ ìž…ë ¥í•˜ì„¸ìš”(1-3) : ");
+		fgets(input, sizeof(input), stdin);
+		y = atoi(input);
+
 		x--;
-		printf("¼¼·Î ÀÔ·ÂÇÏ¼¼¿ä(1-3) : ");
-		scanf("%d", &y);
 		y--;
 
 		if (board[x][y] != ' ') {
 			printf("Invalid Move!\n");
-		}
-		else {
+		} else {
 			board[x][y] = PLAYER;
 			break;
 		}
 	} while (board[x][y] != ' ');
 }
-void computerMove() {	//ÄÄÇ»ÅÍ ·£´ý µÎ±â
+
+void computerMove() {	//ì»´í“¨í„° ëžœë¤ ë‘ê¸°
 	srand(time(0));
 	int x;
 	int y;
@@ -109,20 +114,20 @@ void computerMove() {	//ÄÄÇ»ÅÍ ·£´ý µÎ±â
 		printWinner(' ');
 	}
 }
-char checkWinner() {		//ÇÑÁÙ ½Â¸® È®ÀÎ
+char checkWinner() {		//í•œì¤„ ìŠ¹ë¦¬ í™•ì¸
 
 
-	for (int i = 0; i < 3; i++) {	//°¡·Î ÇÑÁÙ ½Â¸®
+	for (int i = 0; i < 3; i++) {	//ê°€ë¡œ í•œì¤„ ìŠ¹ë¦¬
 		if (board[i][0] == board[i][1] && board[i][0] == board[i][2]) {
 			return board[i][0];
 		}
 	}
-	for (int i = 0; i < 3; i++) {	//¼¼·Î ÇÑÁÙ ½Â¸®
+	for (int i = 0; i < 3; i++) {	//ì„¸ë¡œ í•œì¤„ ìŠ¹ë¦¬
 		if (board[0][i] == board[1][i] && board[0][i] == board[2][i]) {
 			return board[0][i];
 		}
 	}
-									//´ë°¢¼± ÇÑÁÙ ½Â¸®
+									//ëŒ€ê°ì„  í•œì¤„ ìŠ¹ë¦¬
 	if (board[0][0] == board[1][1] && board[0][0] == board[2][2]) {
 			return board[0][0];
 	}
@@ -132,16 +137,16 @@ char checkWinner() {		//ÇÑÁÙ ½Â¸® È®ÀÎ
 	return ' ';
 	
 }
-void printWinner(char winner) {			//½ÂÆÐ È®ÀÎ
+void printWinner(char winner) {			//ìŠ¹íŒ¨ í™•ì¸
 	if (winner == PLAYER) {
-		printf("ÀÎ°£ ½Â¸®!");
+		printf("ì¸ê°„ ìŠ¹ë¦¬!");
 	}
 	else if(winner == COMPUTER)
 	{
-		printf("ÄÄÇ»ÅÍ ½Â¸®!");
+		printf("ì»´í“¨í„° ìŠ¹ë¦¬!");
 	}
 	else
 	{
-		printf("µ¿Á¡!");
+		printf("ë™ì !");
 	}
 }
